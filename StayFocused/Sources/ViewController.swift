@@ -79,29 +79,41 @@ class ViewController: UIViewController {
             height: 300,
         )
     }
+    
+    // MARK: - Setup Views
+    
+    func setUpViews() {
+        
+        // MARK: - Setup Background
+        
+        imageView = UIImageView(image: Images.backgroundImage)
+        imageView.contentMode = .scaleToFill
+        
+        // MARK: - Setup TextLabel
+        
+        textLabel.text = Texts.startText
+        textLabel.textColor = .white
+        textLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        textLabel.numberOfLines = 0
+        textLabel.layer.opacity = 0.8
+        
+        // MARK: - Setup Timer label
+        
         timerLabel.textAlignment = .center
-        let minutes = remainingTime / 60
-        let seconds = remainingTime % 60
-        timerLabel.text = String(format: "%02d:%02d", minutes, seconds)
+        timerLabel.text = String(
+            format: "%02d:%02d",
+            remainingTime / 60,
+            remainingTime % 60)
         timerLabel.textColor = .lightGray
         timerLabel.font = .systemFont(ofSize: 36, weight: .bold)
-        timerLabel.translatesAutoresizingMaskIntoConstraints = false
-        return timerLabel
-    }()
-    
-    private lazy var button: UIButton =  {
-        let button = UIButton(type: .roundedRect)
-        let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 36, weight: .regular)
-        let playImage = UIImage(systemName: "play.circle", withConfiguration: iconConfiguration)
-        let pauseImage = UIImage(systemName: "pause.circle", withConfiguration: iconConfiguration)
-        button.setImage(playImage, for: .normal)
+        
+        // MARK: - Setup Button
+        
+        button.setImage(Images.playImage, for: .normal)
         button.tintColor = .lightGray
         button.layer.opacity = 0.5
         button.addTarget(self, action: #selector(pressButton), for: .touchUpInside)
         button.addTarget(self, action: #selector(releaseButton), for: .touchDown)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()

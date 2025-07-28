@@ -143,100 +143,110 @@ class ViewController: UIViewController {
     }
     
      private func startTimer() {
+    // MARK: - Work Logick
+    
+    /// Start timer method
+    
+    private func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimerLabel), userInfo: nil, repeats: true)
     }
     
+    /// Update timer label method
+    
     @objc private func updateTimerLabel() {
         if remainingTime > 0 {
             remainingTime -= 1
-            let minutes = remainingTime / 60
-            let seconds = remainingTime % 60
-            let minutesString = String(format: "%02d", minutes)
-            let secondsString = String(format: "%02d", seconds)
-            timerLabel.text = "\(minutesString):\(secondsString)"
+            updateViews()
         } else {
-            if workFlag == true {
-                workFlag = false
-                totalTime = 10
-                remainingTime = 10
-                timerLabel.textColor = .green
-                button.tintColor = .green
-                circularProgressBarView.changeColor(.green)
-            } else {
-                circularProgressBarView.changeColor(.red)
-                workFlag = true
-                totalTime = 25
-                remainingTime = 25
-                timerLabel.textColor = .red
-                button.tintColor = .red
-            }
-            let minutes = remainingTime / 60
-            let seconds = remainingTime % 60
-            let minutesString = String(format: "%02d", minutes)
-            let secondsString = String(format: "%02d", seconds)
-            timerLabel.text = "\(minutesString):\(secondsString)"
+            switchPeriod()
+            updateViews()
         }
         
         let progress = 1 - CGFloat(remainingTime) / CGFloat(totalTime)
         circularProgressBarView.setProgressBar(value: progress)
     }
     
+    /// Switch period method(work/relax)
+    
+    func switchPeriod() {
+        if workFlag == true {
+            updateBreakPeriod()
+        } else {
+           updateWorkPeriod()
+        }
+        circularProgressBar.resetProgressWithoutAnimation()
+    }
+    
+    /// UpdateViews method
+    
+    private func updateViews() {
+        let minutesString = String(format: "%02d", remainingTime / 60)
+        let secondsString = String(format: "%02d", remainingTime % 60)
+        timerLabel.text = "\(minutesString):\(secondsString)"
+        let progress = CGFloat(totalTime - remainingTime) / CGFloat(totalTime)
+        circularProgressBar.updateProgress(progress)
+    }
+    
+    
+    private func updateBreakPeriod() {
+        textLabel.text = Texts.breakText
+        textLabel.textColor = .green
+        timerLabel.textColor = .green
+        button.tintColor = .green
+        circularProgressBar.changeColor(.green)
+        workFlag = false
+        totalTime = 10
+        remainingTime = 10
+    }
+    
+    private func updateWorkPeriod() {
+        textLabel.text = Texts.workText
+        textLabel.textColor = .red
+        timerLabel.textColor = .red
+        button.tintColor = .red
+        circularProgressBar.changeColor(.red)
+        workFlag = true
+        totalTime = 25
+        remainingTime = 25
+    }
+    
+    /// Press Button method
+    
     @objc private func pressButton(sender: UIButton) {
-        if timerFlag == false {
+        if !timerFlag {
             startTimer()
-            let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 36, weight: .regular)
-            let pauseImage = UIImage(systemName: "pause.circle", withConfiguration: iconConfiguration)
-            button.setImage(pauseImage, for: .normal)
-            if workFlag == true {
+            button.setImage(Images.pauseImage, for: .normal)
+            if workFlag {
+                textLabel.text = Texts.workText
+                textLabel.textColor = .red
                 timerLabel.textColor = .red
                 button.tintColor = .red
-                circularProgressBarView.changeColor(.red)
+                circularProgressBar.changeColor(.red)
             } else {
+                textLabel.text = Texts.breakText
+                textLabel.textColor = .green
                 timerLabel.textColor = .green
                 button.tintColor = .green
-                circularProgressBarView.changeColor(.green)
+                circularProgressBar.changeColor(.green)
             }
             UIView.animate(withDuration: 0.1, animations: { self.button.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)})
             timerFlag = true
         } else {
             timer?.invalidate()
             button.tintColor = .lightGray
+            textLabel.text = Texts.pauseText
+            textLabel.textColor = .lightGray
             timerLabel.textColor = .lightGray
-            circularProgressBarView.changeColor(.lightGray)
-            let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 36, weight: .regular)
-            let playImage = UIImage(systemName: "play.circle", withConfiguration: iconConfiguration)
-            button.setImage(playImage, for: .normal)
+            circularProgressBar.changeColor(.lightGray)
+            button.setImage(Images.playImage, for: .normal)
             timerFlag = false
         }
-    }
-    
-    private func setUPCiicularProgressBarView() {
-        circularProgressBarView.center = view.center
-        
     }
     
     @objc private func releaseButton(sender: UIButton) {
         UIView.animate(withDuration: 0.1, animations: { self.button.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)})
     }
-    private func setupHierarchy() {
-        view.addSubview(timerLabel)
-        view.addSubview(button)
-        view.addSubview(circularProgressBarView)
-    }
-    
-    private func setupApp() {
-        timerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        timerLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        button.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 50).isActive = true
-        button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
-        button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
-        
-        circularProgressBarView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        circularProgressBarView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
-
 }
 
 // MARK: - Progress Bar Class

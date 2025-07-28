@@ -41,6 +41,44 @@ class ViewController: UIViewController {
     
     private lazy var timerLabel: UILabel = {
         let timerLabel = UILabel()
+    // MARK: - Setup Constraints
+    
+    private func setupConstraints() {
+        
+        imageView.addConstraints(
+            top: view.topAnchor,
+            topPadding: 0,
+            left: view.leadingAnchor,
+            leftPadding: 0
+        )
+        
+        textLabel.addConstraints(
+            centerX: view.centerXAnchor,
+            top: view.topAnchor,
+            topPadding: 150
+        )
+        
+        timerLabel.addConstraints(
+            centerX: view.centerXAnchor,
+            centerY: view.centerYAnchor
+        )
+        
+        button.addConstraints(
+            top: timerLabel.bottomAnchor,
+            topPadding: 50,
+            left: view.leadingAnchor,
+            leftPadding: 100,
+            right: view.trailingAnchor,
+            rightPadding: -100
+        )
+        
+        circularProgressBar.addConstraints(
+            centerX: view.centerXAnchor,
+            centerY: view.centerYAnchor,
+            width: 300,
+            height: 300,
+        )
+    }
         timerLabel.textAlignment = .center
         let minutes = remainingTime / 60
         let seconds = remainingTime % 60

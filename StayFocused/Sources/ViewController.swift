@@ -31,13 +31,13 @@ class ViewController: UIViewController {
     private var timer: Timer?
     private var workFlag = true
     private var timerFlag = false
- 
     
-    private lazy var circularProgressBarView: CircularProgressBarView = {
-        var circularProgressBarView = CircularProgressBarView(frame: CGRect(x: 100, y: 100, width: 150, height: 150))
-        circularProgressBarView.translatesAutoresizingMaskIntoConstraints = false
-        return circularProgressBarView
-    }()
+    // MARK: - Create View elements
+    private lazy var textLabel = UILabel()
+    private lazy var imageView = UIImageView()
+    private var timerLabel = UILabel()
+    private lazy var button = UIButton()
+    private lazy var circularProgressBar = CircularProgressBarView()
     
     private lazy var timerLabel: UILabel = {
         let timerLabel = UILabel()

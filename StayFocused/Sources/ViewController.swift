@@ -39,8 +39,25 @@ class ViewController: UIViewController {
     private lazy var button = UIButton()
     private lazy var circularProgressBar = CircularProgressBarView()
     
-    private lazy var timerLabel: UILabel = {
-        let timerLabel = UILabel()
+    // MARK: - Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpViews()
+        setupHierarchy()
+        setupConstraints()
+    }
+    
+    // MARK: - Hierarchy method
+    
+    private func setupHierarchy() {
+        view.addSubview(imageView)
+        view.addSubview(circularProgressBar)
+        view.addSubview(textLabel)
+        view.addSubview(timerLabel)
+        view.addSubview(button)
+    }
+    
     // MARK: - Setup Constraints
     
     private func setupConstraints() {

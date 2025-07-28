@@ -23,6 +23,9 @@ class ViewController: UIViewController {
         static let pauseImage = UIImage(systemName: "pause.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 36, weight: .regular))
         static let backgroundImage = UIImage(named: "background")
     }
+    
+    // MARK: - Timer settings
+    
     private lazy var totalTime = 25
     private var remainingTime = 25
     private var timer: Timer?

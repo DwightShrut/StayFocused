@@ -239,28 +239,24 @@ class ViewController: UIViewController {
 
 }
 
+// MARK: - Progress Bar Class
+
 class CircularProgressBarView: UIView {
     
     var progress = CAShapeLayer()
-    private var circleLayer = CAShapeLayer()
+    var circleLayer = CAShapeLayer()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        createCircularPath()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        createCircularPath()
-    }
-    
-    func changeColor(_ color: UIColor) {
-        progress.strokeColor = color.cgColor
     }
     
     private func createCircularPath() {
         let circularPath = UIBezierPath(
-            arcCenter: anchorPoint,
-            radius: min(bounds.width, bounds.height),
+            arcCenter: CGPoint(x: bounds.midX, y: bounds.midY),
+            radius: min(bounds.width, bounds.height) / 2,
             startAngle: -.pi / 2,
             endAngle: .pi * 3 / 2,
             clockwise: true
@@ -268,29 +264,42 @@ class CircularProgressBarView: UIView {
         circleLayer.path = circularPath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.lineWidth = 10
-        circleLayer.strokeEnd = 1.0
-        circleLayer.strokeColor = UIColor.darkGray.cgColor
-        
-        layer.addSublayer(circleLayer)
+        circleLayer.strokeEnd = 1
+        circleLayer.strokeColor = UIColor.lightGray.cgColor
         
         progress.path = circularPath.cgPath
         progress.fillColor = UIColor.clear.cgColor
         progress.lineCap = .round
         progress.lineWidth = 10
         progress.strokeEnd = 0
-        progress.strokeColor = UIColor.red.cgColor
-        
+        progress.strokeColor = UIColor.lightGray.cgColor
+    }
+    
+    override func layoutSubviews() {
+           super.layoutSubviews()
+           createCircularPath()
+       }
+    
+    func setUpProgressBar() {
+        layer.addSublayer(circleLayer)
         layer.addSublayer(progress)
     }
     
-    internal func setProgressBar(value: CGFloat) {
-        let newProgress = value
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.fromValue = progress.strokeEnd
-        animation.toValue = newProgress
-        animation.duration = 1
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        progress.strokeEnd = newProgress
-        progress.add(animation, forKey: "progressAnim")
+    func resetProgressWithoutAnimation() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        progress.strokeEnd = 0
+        CATransaction.commit()
+    }
+    
+    func changeColor(_ color: UIColor) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        circleLayer.strokeColor = color.cgColor
+        CATransaction.commit()
+    }
+    
+    func updateProgress(_ value: CGFloat) {
+        progress.strokeEnd = value
     }
 }

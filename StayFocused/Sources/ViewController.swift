@@ -9,6 +9,20 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // MARK: - Constants
+    
+    private enum Texts {
+        static let workText = "Let's Work"
+        static let breakText = "Relax a bit"
+        static let pauseText = "Pause"
+        static let startText = "Press Play Button to Start work"
+    }
+    
+    private enum Images {
+        static let playImage = UIImage(systemName: "play.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 36, weight: .regular))
+        static let pauseImage = UIImage(systemName: "pause.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 36, weight: .regular))
+        static let backgroundImage = UIImage(named: "background")
+    }
     private lazy var totalTime = 25
     private var remainingTime = 25
     private var timer: Timer?

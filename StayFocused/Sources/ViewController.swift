@@ -131,18 +131,12 @@ class ViewController: UIViewController {
         button.layer.opacity = 0.5
         button.addTarget(self, action: #selector(pressButton), for: .touchUpInside)
         button.addTarget(self, action: #selector(releaseButton), for: .touchDown)
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .darkGray
-        totalTime = remainingTime
-        setupHierarchy()
-        setupApp()
-        setUPCiicularProgressBarView()
-        // Do any additional setup after loading the view.
+        
+        // MARK: - Setup Progress Bar
+        circularProgressBar.setUpProgressBar()
+        circularProgressBar.layer.opacity = 0.6
     }
     
-     private func startTimer() {
     // MARK: - Work Logick
     
     /// Start timer method
@@ -162,9 +156,6 @@ class ViewController: UIViewController {
             switchPeriod()
             updateViews()
         }
-        
-        let progress = 1 - CGFloat(remainingTime) / CGFloat(totalTime)
-        circularProgressBarView.setProgressBar(value: progress)
     }
     
     /// Switch period method(work/relax)

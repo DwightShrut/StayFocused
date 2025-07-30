@@ -199,26 +199,6 @@ class ViewController: UIViewController {
         remainingTime = 25
     }
     
-
-class CircularProgressBarView: UIView {
-    
-    var progress = CAShapeLayer()
-    var circleLayer = CAShapeLayer()
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    private func createCircularPath() {
-        let circularPath = UIBezierPath(
-            arcCenter: CGPoint(x: bounds.midX, y: bounds.midY),
-            radius: min(bounds.width, bounds.height) / 2,
-            startAngle: -.pi / 2,
-            endAngle: .pi * 3 / 2,
-            clockwise: true
     private func updateViewsToWork() {
         startTimer()
         button.setImage(Images.pauseImage, for: .normal)
@@ -231,28 +211,9 @@ class CircularProgressBarView: UIView {
             withDuration: 0.1,
             animations: { self.button.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)}
         )
-        circleLayer.path = circularPath.cgPath
-        circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.lineWidth = 10
-        circleLayer.strokeEnd = 1
-        circleLayer.strokeColor = UIColor.lightGray.cgColor
-        
-        progress.path = circularPath.cgPath
-        progress.fillColor = UIColor.clear.cgColor
-        progress.lineCap = .round
-        progress.lineWidth = 10
-        progress.strokeEnd = 0
-        progress.strokeColor = UIColor.lightGray.cgColor
+        timerFlag = true
     }
     
-    override func layoutSubviews() {
-           super.layoutSubviews()
-           createCircularPath()
-       }
-    
-    func setUpProgressBar() {
-        layer.addSublayer(circleLayer)
-        layer.addSublayer(progress)
     private func updateViewsToPause() {
         timer?.invalidate()
         button.tintColor = .lightGray
@@ -264,18 +225,8 @@ class CircularProgressBarView: UIView {
         timerFlag = false
     }
     
-    func resetProgressWithoutAnimation() {
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        progress.strokeEnd = 0
-        CATransaction.commit()
-    }
+    /// Press Button method
     
-    func changeColor(_ color: UIColor) {
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        circleLayer.strokeColor = color.cgColor
-        CATransaction.commit()
     private func pressButton() {
         if !timerFlag {
             updateViewsToWork()
@@ -284,8 +235,6 @@ class CircularProgressBarView: UIView {
         }
     }
     
-    func updateProgress(_ value: CGFloat) {
-        progress.strokeEnd = value
     private func releaseButton() {
         UIView.animate(
             withDuration: 0.1,

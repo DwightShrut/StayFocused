@@ -107,7 +107,8 @@ class ViewController: UIViewController {
         timerLabel.text = String(
             format: "%02d:%02d",
             remainingTime / 60,
-            remainingTime % 60)
+            remainingTime % 60
+        )
         timerLabel.textColor = .lightGray
         timerLabel.font = .systemFont(ofSize: 36, weight: .bold)
         
@@ -130,7 +131,13 @@ class ViewController: UIViewController {
     
     private func startTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimerLabel), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(
+            timeInterval: 1.0,
+            target: self,
+            selector: #selector(updateTimerLabel),
+            userInfo: nil,
+            repeats: true
+        )
     }
     
     /// Update timer label method
@@ -151,7 +158,7 @@ class ViewController: UIViewController {
         if workFlag == true {
             updateBreakPeriod()
         } else {
-           updateWorkPeriod()
+            updateWorkPeriod()
         }
         circularProgressBar.resetProgressWithoutAnimation()
     }
@@ -165,7 +172,6 @@ class ViewController: UIViewController {
         let progress = CGFloat(totalTime - remainingTime) / CGFloat(totalTime)
         circularProgressBar.updateProgress(progress)
     }
-    
     
     private func updateBreakPeriod() {
         textLabel.text = Texts.breakText

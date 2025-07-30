@@ -60,3 +60,21 @@ extension UIView {
         }
     }
 }
+
+extension ViewController {
+    
+    // MARK: - Constants
+    
+    enum Texts {
+        static let workText = "Let's Work"
+        static let breakText = "Relax a bit"
+        static let pauseText = "Pause"
+        static let startText = "Press Play Button to Start work"
+    }
+    
+   enum Images {
+        static let playImage = UIImage(systemName: "play.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 36, weight: .regular))
+        static let pauseImage = UIImage(systemName: "pause.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 36, weight: .regular))
+        static let backgroundImage = UIImage(named: "background")
+    }
+}

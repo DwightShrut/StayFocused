@@ -27,20 +27,36 @@ extension UIView {
     ) {
         translatesAutoresizingMaskIntoConstraints = false
         
-        if let centerX = centerX { centerXAnchor.constraint(equalTo: centerX, constant: centerXPaddiing).isActive = true }
+        if let centerX {
+            centerXAnchor.constraint(equalTo: centerX, constant: centerXPaddiing).isActive = true
+        }
         
-        if let centerY = centerY { centerYAnchor.constraint(equalTo: centerY, constant: centerYPadding).isActive = true }
+        if let centerY {
+            centerYAnchor.constraint(equalTo: centerY, constant: centerYPadding).isActive = true
+        }
         
-        if let top = top { topAnchor.constraint(equalTo: top, constant: topPadding).isActive = true }
+        if let top {
+            topAnchor.constraint(equalTo: top, constant: topPadding).isActive = true
+        }
         
-        if let left = left { leadingAnchor.constraint(equalTo: left, constant: leftPadding).isActive = true }
+        if let left {
+            leadingAnchor.constraint(equalTo: left, constant: leftPadding).isActive = true
+        }
         
-        if let right = right { trailingAnchor.constraint(equalTo: right, constant: rightPadding).isActive = true }
+        if let right {
+            trailingAnchor.constraint(equalTo: right, constant: rightPadding).isActive = true
+        }
         
-        if let bottom = bottom { bottomAnchor.constraint(equalTo: bottom, constant: -bottomPadding).isActive = true }
+        if let bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -bottomPadding).isActive = true
+        }
         
-        if width != 0 { widthAnchor.constraint(equalToConstant: width).isActive = true }
+        if width != 0 {
+            widthAnchor.constraint(equalToConstant: width).isActive = true
+        }
         
-        if height != 0 { heightAnchor.constraint(equalToConstant: height).isActive = true }
+        if height != 0 {
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
     }
 }

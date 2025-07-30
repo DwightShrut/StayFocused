@@ -117,8 +117,12 @@ class ViewController: UIViewController {
         button.setImage(Images.playImage, for: .normal)
         button.tintColor = .lightGray
         button.layer.opacity = 0.5
-        button.addTarget(self, action: #selector(pressButton), for: .touchUpInside)
-        button.addTarget(self, action: #selector(releaseButton), for: .touchDown)
+        button.addAction(UIAction { [weak self] _ in
+            self?.pressButton()
+        }, for: .touchUpInside)
+        button.addAction(UIAction { [weak self] _ in
+            self?.releaseButton()
+        }, for: .touchDown)
         
         // MARK: - Setup Progress Bar
         circularProgressBar.setUpProgressBar()
@@ -291,9 +295,20 @@ class CircularProgressBarView: UIView {
         CATransaction.setDisableActions(true)
         circleLayer.strokeColor = color.cgColor
         CATransaction.commit()
+    private func pressButton() {
+        if !timerFlag {
+            updateViewsToWork()
+        } else {
+            updateViewsToPause()
+        }
     }
     
     func updateProgress(_ value: CGFloat) {
         progress.strokeEnd = value
+    private func releaseButton() {
+        UIView.animate(
+            withDuration: 0.1,
+            animations: { self.button.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)}
+        )
     }
 }

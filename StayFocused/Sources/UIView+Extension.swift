@@ -7,9 +7,11 @@
 
 import UIKit
 
+// MARK: - Constraints
+
 extension UIView {
     
-     func addConstraints(
+    func addConstraints(
         centerX: NSLayoutXAxisAnchor? = nil,
         centerXPaddiing: CGFloat = 0,
         centerY: NSLayoutYAxisAnchor? = nil,
@@ -61,9 +63,9 @@ extension UIView {
     }
 }
 
+// MARK: - Constants
+
 extension ViewController {
-    
-    // MARK: - Constants
     
     enum Texts {
         static let workText = "Let's Work"
@@ -72,7 +74,7 @@ extension ViewController {
         static let startText = "Press Play Button to Start work"
     }
     
-   enum Images {
+    enum Images {
         static let playImage = UIImage(systemName: "play.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 36, weight: .regular))
         static let pauseImage = UIImage(systemName: "pause.circle")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 36, weight: .regular))
         static let backgroundImage = UIImage(named: "background")

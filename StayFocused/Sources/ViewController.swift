@@ -9,6 +9,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // MARK: - Create View elements
+    
+    private lazy var textLabel = UILabel()
+    private lazy var imageView = UIImageView()
+    private var timerLabel = UILabel()
+    private lazy var button = UIButton()
+    private lazy var circularProgressBar = CircularProgressBarView()
+    
     // MARK: - Timer settings
     
     private lazy var totalTime = 25
@@ -17,12 +25,6 @@ class ViewController: UIViewController {
     private var workFlag = true
     private var timerFlag = false
     
-    // MARK: - Create View elements
-    private lazy var textLabel = UILabel()
-    private lazy var imageView = UIImageView()
-    private var timerLabel = UILabel()
-    private lazy var button = UIButton()
-    private lazy var circularProgressBar = CircularProgressBarView()
     
     // MARK: - Lifecycle
     

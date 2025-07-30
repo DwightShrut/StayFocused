@@ -199,45 +199,6 @@ class ViewController: UIViewController {
         remainingTime = 25
     }
     
-    /// Press Button method
-    
-    @objc private func pressButton(sender: UIButton) {
-        if !timerFlag {
-            startTimer()
-            button.setImage(Images.pauseImage, for: .normal)
-            if workFlag {
-                textLabel.text = Texts.workText
-                textLabel.textColor = .red
-                timerLabel.textColor = .red
-                button.tintColor = .red
-                circularProgressBar.changeColor(.red)
-            } else {
-                textLabel.text = Texts.breakText
-                textLabel.textColor = .green
-                timerLabel.textColor = .green
-                button.tintColor = .green
-                circularProgressBar.changeColor(.green)
-            }
-            UIView.animate(withDuration: 0.1, animations: { self.button.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)})
-            timerFlag = true
-        } else {
-            timer?.invalidate()
-            button.tintColor = .lightGray
-            textLabel.text = Texts.pauseText
-            textLabel.textColor = .lightGray
-            timerLabel.textColor = .lightGray
-            circularProgressBar.changeColor(.lightGray)
-            button.setImage(Images.playImage, for: .normal)
-            timerFlag = false
-        }
-    }
-    
-    @objc private func releaseButton(sender: UIButton) {
-        UIView.animate(withDuration: 0.1, animations: { self.button.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)})
-    }
-}
-
-// MARK: - Progress Bar Class
 
 class CircularProgressBarView: UIView {
     
@@ -258,6 +219,17 @@ class CircularProgressBarView: UIView {
             startAngle: -.pi / 2,
             endAngle: .pi * 3 / 2,
             clockwise: true
+    private func updateViewsToWork() {
+        startTimer()
+        button.setImage(Images.pauseImage, for: .normal)
+        textLabel.text = workFlag ? Texts.workText : Texts.breakText
+        textLabel.textColor = workFlag ? .red : .green
+        timerLabel.textColor = workFlag ? .red : .green
+        button.tintColor = workFlag ? .red : .green
+        circularProgressBar.changeColor(workFlag ? .red : .green)
+        UIView.animate(
+            withDuration: 0.1,
+            animations: { self.button.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)}
         )
         circleLayer.path = circularPath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
@@ -281,6 +253,15 @@ class CircularProgressBarView: UIView {
     func setUpProgressBar() {
         layer.addSublayer(circleLayer)
         layer.addSublayer(progress)
+    private func updateViewsToPause() {
+        timer?.invalidate()
+        button.tintColor = .lightGray
+        textLabel.text = Texts.pauseText
+        textLabel.textColor = .lightGray
+        timerLabel.textColor = .lightGray
+        circularProgressBar.changeColor(.lightGray)
+        button.setImage(Images.playImage, for: .normal)
+        timerFlag = false
     }
     
     func resetProgressWithoutAnimation() {
